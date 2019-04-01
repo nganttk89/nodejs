@@ -6,18 +6,35 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>To do app</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('form').on('submit', function (e) {
+                var todo = e.target.value;
+                $.ajax({
+                    type: "POST",
+                    data: todo,
+                    url: './todo',
+                    success: function (result) {
+                        location.reload();
+                    }
+                });
+                return false;
+            })
+        })
+    </script>
 </head>
 <body>
-    <div>
-        <form action="">
-            <input type="text" name="todoInput" />
-            <button type="submit">Add</button>
-        </form>
-        <ul>
-            <% for(var i = 0; i < todos.length; i++){ %>
-                <li><%= todos[i].name %></li>
-            <% } %>
-        </ul>
-    </div>
+<div>
+    <form action="">
+        <input type="text" name="todoInput"/>
+        <button type="submit">Add</button>
+    </form>
+    <ul>
+        <% for(var i = 0; i < todos.length; i++){ %>
+            <li><%= todos[i].name %></li>
+        <% } %>
+    </ul>
+</div>
 </body>
 </html>

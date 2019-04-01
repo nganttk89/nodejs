@@ -1,3 +1,5 @@
+var bodyParser = require('body-parser');
+var urlencodeParser = bodyParser.urlencoded({extended: false})
 var mysql = require('mysql');
 
 console.log('Get connection ...');
@@ -14,7 +16,6 @@ module.exports = function (app) {
     app.get('/todo', function (req, res) {
         conn.connect(function(err) {
             if (err) throw err;
-            console.log("Connected!");
             conn.query("SELECT * FROM list", function (err, result) {
                 if(err) throw err;
                 res.render('todo', {todos: result})
@@ -22,7 +23,7 @@ module.exports = function (app) {
         });
 
     });
-    app.post('/todo', function (req, res) {
+    app.post('/todo', urlencodeParser, function (req, res) {
         conn.connect(function (err) {
             if (err) throw err;
             console.log("Connected!");
