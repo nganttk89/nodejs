@@ -1,7 +1,22 @@
 doctype html
 html
   head
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
     title= title
+    link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    head.main-header
+      h1.text-center: img(src="/images/logo.png")
+    nav.text-center.border-top.border-bottom.main-menu
+      ul.list-inline.pt-3
+        li.list-inline-item: a(href='/').text-uppercase Book
+        li.list-inline-item: a(href='').text-uppercase Author
+        li.list-inline-item: a(href='/genre').text-uppercase Genre
+        li.list-inline-item: a(href='').text-uppercase About
+    .container.mt-5
+      h1.mb-5= title
+      block content
+    script(src="/jquery/dist/jquery.min.js")
+    script(src="/bootstrap/dist/js/bootstrap.min.js")
+    script(src="/reload/reload.js")

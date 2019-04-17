@@ -3,7 +3,7 @@ const router = new express.Router()
 const User = require('../models/user')
 
 router.get('/users', async (req, res) => {
-    try {
+		try {
         const users = await User.find({})
         res.send(users)
     } catch (error) {

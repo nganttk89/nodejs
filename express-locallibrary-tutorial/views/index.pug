@@ -1,12 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  ul
-  each book in list
-    li 
-      a(href=book.url) #{book.title} 
-      | (#{book.author.name})
-
+  if list.length > 0
+    table.table-responsive
+			body
+		    each book in list
+		      tr 
+						td
+			        a(href=book.url) #{book.title} 
+			        | (#{book.author.name})
   else
-    li There are no books.
+      div There are no books.

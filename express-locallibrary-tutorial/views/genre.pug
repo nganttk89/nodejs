@@ -1,13 +1,21 @@
 extends layout
 
 block content
-  h1= title
-  include partials/genre-form.pug
-  ul
-  each item in list
-    li 
-      a(href=item.url) #{item.name} 
-  
+  form(method='POST' action)
+    .d-flex.align-items-center.mb-5
+      div.w-100
+        input#name.form-control(type='text', placeholder='Fantasy, Poetry etc.' name='name')
+      button.btn.btn-primary(type='submit') submit
+  p #{error}
+  if list.length > 0
+    .table-responsive
+      table.table
+        body
+          each item in list
+            tr
+              td.align-middle: a(href=item.url) #{item.name} 
+              td.text-right
+                button.btn.btn-dark.mr-3 Edit  
+                button.btn.btn-danger Delete
   else
-    li There are no genre.
-  
+    p There are no genre.
