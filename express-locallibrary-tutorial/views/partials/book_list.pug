@@ -1,0 +1,20 @@
+
+if list.length > 0
+	.table-responsive#bookList
+		table.table
+			thead
+				tr
+					th: strong Name
+					th: strong Author
+					th &nbsp;
+			body
+				each book in list
+					tr 
+						td.align-middle
+							a(href=book.url) #{book.title} 
+						td.align-middle #{book.author.name}
+						td.text-right
+							button.btn.btn-dark.mr-3 Edit
+							button.btn.btn-danger(onclick='handleBookDelete("' + book._id +'")') Delete
+else
+	div There are no books.
