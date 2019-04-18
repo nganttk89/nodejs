@@ -1,13 +1,27 @@
 extends layout
-
+//- Demo handle action by ajax
 block content
-  if list.length > 0
-    table.table-responsive
-			body
-		    each book in list
-		      tr 
-						td
-			        a(href=book.url) #{book.title} 
-			        | (#{book.author.name})
-  else
-      div There are no books.
+	form#formBookCreate.mb-5(method='POST')
+		.form-group
+			label(for='title') Title *
+			input#title.form-control(type='text' name='title')
+		.form-group
+			label(for='author') Author *
+			select.form-control#author(name='author')
+				each item in authors
+					option(value=item._id) #{item.name}
+		.form-group
+			label(for='summary') Summary
+			input#summary.form-control(type='text' name='summary')
+		.form-group
+			label(for='isbn') ISBN
+			input#isbn.form-control(type='text' name='isbn')
+		.form-group
+			label.d-block Genre:
+			each item in genres
+				.form-check.form-check-inline
+					input.form-check-input(type='checkbox' value=item.name id='genre-'+item._id name='genre[]')
+					label.form-check-label(for='genre-'+item._id)= item.name
+		button.btn.btn-primary(type='submit') Submit
+	p= error
+	include partials/book_list.pug

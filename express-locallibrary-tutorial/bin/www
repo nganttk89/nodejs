@@ -7,7 +7,6 @@
 var app = require('../app')
 var debug = require('debug')('express-locallibrary-tutorial:server')
 var http = require('http')
-var reload = require('reload')
 /**
  * Get port from environment and store in Express.
  */
@@ -24,15 +23,7 @@ var server = http.createServer(app)
 /**
  * Listen on provided port, on all network interfaces.
  */
-reload(app).then(function () {
-	// Reload started, start web server
-	server.listen(port, function () {
-		console.log('Web server listening on port ddd' + port)
-	})
-}).catch(function (err) {
-	console.error('Reload could not start, could not start server/sample app', err)
-})
-// server.listen(port);
+server.listen(port);
 server.on('error', onError)
 server.on('listening', onListening)
 

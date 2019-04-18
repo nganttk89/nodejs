@@ -1,21 +1,29 @@
 extends layout
 
 block content
-  form(method='POST' action)
-    .d-flex.align-items-center.mb-5
-      div.w-100
-        input#name.form-control(type='text', placeholder='Fantasy, Poetry etc.' name='name')
-      button.btn.btn-primary(type='submit') submit
-  p #{error}
-  if list.length > 0
-    .table-responsive
-      table.table
-        body
-          each item in list
-            tr
-              td.align-middle: a(href=item.url) #{item.name} 
-              td.text-right
-                button.btn.btn-dark.mr-3 Edit  
-                button.btn.btn-danger Delete
-  else
-    p There are no genre.
+	form(method='POST' action)
+		.d-flex.align-items-center.mb-5
+			div.w-100
+				input#name.form-control(type='text', placeholder='Fantasy, Poetry etc.' name='name')
+			button.btn.btn-primary(type='submit') submit
+	p #{error}
+	if list.length > 0
+		//- form(method='POST' action)#form-genre
+		.table-responsive
+			table.table
+				body
+					each item in list
+						tr
+							td.align-middle: input(type='text' value=item.name name='nameItem' id='nameItem').border-0
+							td.text-right
+								form(method='POST' action onsubmit="formEditGenre()").d-inline-block#formEditGenre
+									input(type='hidden' name='action' value='edit')
+									input(type='hidden' name='id' value=item._id)
+									input(type='hidden' name='nameEdit' id='nameEdit')
+									button.btn.btn-dark.mr-3(type='submit') Edit
+								form(method='POST' action).d-inline-block
+									input(type='hidden' name='action' value='delete')
+									input(type='hidden' name='id' value=item._id)
+									button.btn.btn-danger(type='submit') Delete
+	else
+		p There are no genre.

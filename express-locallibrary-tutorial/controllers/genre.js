@@ -2,53 +2,83 @@ const Genre = require('../models/genre')
 const Book = require('../models/book')
 const async = require('async')
 
-exports.genre_list = (req, res, next) => {
+const render = (req, res, next, error = null) => {
 	Genre.find({})
-		.exec(function(err, data) {
+		.exec(function(err, respone) {
 			if (err) {
 				return next(err)
 			}
-			// Successful, so render
-			res.render('genre', {
+			let data = {
 				title: 'Genre list',
-				list: data
-			})
+				list: respone
+			}
+			if (error !== null) {
+				data['error'] = error
+			}
+			res.render('genre', data)
 		})
 }
 
-exports.create_genre_post = async (req, res, next) => {
+const genre_create = async (req, res, next) => {
 	const genre = new Genre({
 		name: req.body.name
 	})
+	let error = null
 	try {
 		await genre.save()
-		const genres = await Genre.find()
-		res.render('genre', {
-			title: 'Genre list',
-			list: genres
-		})
-		// res.redirect(genre.url)
-	} catch (e) {
-		const genres = await Genre.find()
-		res.render('genre', {
-			error: e.errors['name'].message,
-			title: 'Genre list',
-			list: genres
-		})
+	} catch (error) {
+		error = error
 	}
+	render(req, res, next, error)
 }
 
-exports.genre_delete_post = (req, res, next) => {
-	async.parallel({
-		genre: function (callback) {
-			Genre.findById(req.params.id)
-				.exec(callback)
-		},
-		genreBooks: function(callback) {
-			Book.find({
-				'genre': req.params.id
-			})
-				.exec(callback)
-		}
-	})
+const genre_delete = async (req, res, next) => {
+	// async.parallel({
+	// 	genre: function (callback) {
+	// 		Genre.findById(req.params.id)
+	// 			.exec(callback)
+	// 	},
+	// 	genreBooks: function(callback) {
+	// 		Book.find({
+	// 			'genre': req.params.id
+	// 		})
+	// 			.exec(callback)
+	// 	}
+	// })
+	const id = req.body.id
+	let error = null
+	try {
+		await Genre.deleteOne({ _id: id })
+	} catch (error) {
+		error = error
+	}
+	render(req, res, next, error)
+}
+const genre_edit = async (req, res, next) => {
+	const id = req.body.id
+	const name = req.body.nameEdit
+	let error = null
+	try {
+		await Genre.findOneAndUpdate({_id: id}, {name: name})
+	} catch (error) {
+		error = error
+	}
+	render(req, res, next, error)
+}
+exports.genre_list = (req, res, next) => {
+	render(req, res, next)
+}
+exports.genre_actions = (req, res, next) => {
+	const action = req.body.action
+	switch (action) {
+		case 'delete':
+			genre_delete(req, res, next)
+			break;
+		case 'edit':
+			genre_edit(req, res, next)
+			break;
+		default:
+			genre_create(req, res, next)
+			break;
+	}
 }
