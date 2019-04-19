@@ -1,6 +1,3 @@
-function formEditGenre() {
-	$('#nameEdit').val($('#nameItem').val())
-}
 
 function handleBookDelete(id) {
 	$.post('/', {
