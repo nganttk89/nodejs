@@ -13,6 +13,7 @@ if list.length > 0
 						td.align-middle
 							a(href=book.url) #{book.title} 
 						td.align-middle #{book.author.name}
+						td.align-middle #{book.isbn}
 						td.text-right
 							button.btn.btn-dark.mr-3 Edit
 							button.btn.btn-danger(onclick='handleBookDelete("' + book._id +'")') Delete

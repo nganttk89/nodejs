@@ -28,3 +28,8 @@ block content
 								button.btn.btn-danger(type='submit') Delete
 	else
 		p There are no genre.
+	- var n = 1;
+	.text-center
+		ul.list-inline
+			while n <= pages
+				li.list-inline-item(class=current == n ? 'active': ''): a(href="?page="+n)= n++

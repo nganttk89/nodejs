@@ -20,9 +20,10 @@ $(document).ready(function(){
 			title: target.title.value,
 			author: target.author.value,
 			summary: target.summary.value,
-			isbn: target.summary.isbn,
+			isbn: target.isbn.value,
 			genre: genreArr
 		}
+		console.log(data);
 		$.ajax({
 			url: '/',
 			type: 'POST',

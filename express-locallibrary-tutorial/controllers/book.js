@@ -15,7 +15,8 @@ const render = (req, res, next, error = null, view = 'index') => {
 				books: function(callback) {
 					const perPage = 5
 					const page = req.params.page
-					Book.find(callback, 'title author ').populate('author').limit( perPage ).skip(perPage * page).sort( {title: 'desc'} )
+					Book.find(callback, 'title author ').populate('author')
+					// .limit( perPage ).skip(perPage * page).sort( {title: 'desc'} )
 				}
     }, function(err, results) {
         if (err) { return next(err); }
