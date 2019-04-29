@@ -40,9 +40,7 @@ const render = (req, res, next, error = null) => {
 					data["error"] = error;
 				}
 				res.render("genre", data);
-			})
-			
-			
+			})			
 			
 		});
 };
