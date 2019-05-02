@@ -2,6 +2,8 @@ const express = require('express')
 const router = new express.Router()
 const auth = require('../middleware/auth')
 const User = require('../models/user')
+const multer  = require('multer')
+
 
 // Create a user
 router.post('/users', async (req, res) => {
@@ -13,6 +15,20 @@ router.post('/users', async (req, res) => {
         res.send(error)
     }
 })
+// Upload avatar
+const upload = multer({ 
+    dest: 'uploads/',
+    limits: {
+        fileSize: 1000000
+    }
+})
+router.post('/avatar', upload.single('avatar'), function (req, res, next) {
+    console.log(req.file)
+    console.log(res)
+    res.send()
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+  })
 // Login user
 router.post('/users/login', async (req, res) => {
     try {
